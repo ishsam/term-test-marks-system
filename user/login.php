@@ -53,12 +53,12 @@ if(isset($_SESSION['user_login'])){
 				<?php if(isset($worngpass)){ ?> <div role="alert" aria-live="assertive" aria-atomic="true"  class="toast alert alert-danger fade hide" data-delay="2000"><?php echo $worngpass; ?></div><?php };?>
 					
 			</div>
-              <div class="form-floating">
+              <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username">
 				<?php echo isset($input_arr['input_user_error'])? '<label>'.$input_arr['input_user_error'].'</label>':''; ?>
                 <label for="floatingInput">Email address</label>
               </div>
-              <div class="form-floating">
+              <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
 				<label><?php echo isset($input_arr['input_pass_error'])? '<label>'.$input_arr['input_pass_error'].'</label>':''; ?>
                 <label for="floatingPassword">Password</label>

@@ -107,39 +107,39 @@
               <img class="mb-4" src="../resources/images/person-plus.svg" alt="" width="72" height="57">
               <h1 class="h3 mb-3 fw-normal">Register</h1>
 			
-              <div class="form-floating">
+              <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="email" placeholder="Email" name="username">
 				<?php echo isset($input_arr['username'])? '<label>'.$input_arr['username'].'</label>':''; ?>
                 <label for="email">Email address</label>
               </div>
-			  <div class="form-floating">
+			  <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="firstname" placeholder="First Name" name="firstname">
 				<?php echo isset($input_arr['firstname'])? '<label>'.$input_arr['firstname'].'</label>':''; ?>
                 <label for="firstname">First Name</label>
               </div>
-			  <div class="form-floating">
+			  <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="lastname" placeholder="Last Name" name="lastname">
 				<?php echo isset($input_arr['lastname'])? '<label>'.$input_arr['lastname'].'</label>':''; ?>
                 <label for="lastname">Last Name</label>
               </div>
-			  <div class="form-floating">
+			  <div class="form-floating mb-3">
 				<select class="form-control" id="role" name="role">
 				<option selected>Role</option>
 				<option value="1">Class Teacher</option>
 				<option value="2">Subject Teacher</option>
 				</select>
 			</div>
-			  <div class="form-floating">
+			  <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="regno" placeholder="Registration Number" name="regno">
 				<?php echo isset($input_arr['regno'])? '<label>'.$input_arr['regno'].'</label>':''; ?>
                 <label for="regno">Registration Number</label>
               </div>
-              <div class="form-floating">
+              <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="pw" placeholder="Password" name="password">
 				<?= isset($input_error['password'])? '<label class="error">'.$input_error['password'].'</label>':'';  ?> <?= isset($passlan)? '<label class="error">'.$passlan.'</label>':'';  ?>
                 <label for="pw">Password</label>
               </div>
-			  <div class="form-floating">
+			  <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="repw" placeholder="Confirm Password" name="repassword">
 				<?= isset($input_error['notmatch'])? '<label class="error">'.$input_error['notmatch'].'</label>':'';  ?> <?= isset($passlan)? '<label class="error">'.$passlan.'</label>':'';  ?>
                 <label for="repw">Retype Password</label>
