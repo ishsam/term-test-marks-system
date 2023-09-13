@@ -1,6 +1,17 @@
-INSERT INTO testdb.tbl_class (class_id,max_students) VALUES
+INSERT INTO tbl_class (class_id,max_students) VALUES
+	 ('9A',40),
+	 ('9B',45),
+	 ('9C',20),
+	 ('8A',37),
 	 ('10A',40),
 	 ('10B',45),
 	 ('10C',20),
 	 ('11A',37),
-	 ('11B',43);
+	 ('11B',43),
+	 ('11C',43),
+	 ('12A',37),
+	 ('12B',43),
+	 ('12C',43),
+	 ('13A',37),
+	 ('13B',43),
+	 ('13C',43);

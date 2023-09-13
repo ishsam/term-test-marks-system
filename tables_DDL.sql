@@ -99,6 +99,7 @@ CREATE TABLE `tbl_class_subject` (
   `class_id` varchar(100) NOT NULL,
   `subject_id` varchar(100) NOT NULL,
   `teach_by` varchar(100) NOT NULL,
+  UNIQUE KEY `tbl_class_subject_UN` (`class_id`,`subject_id`,`teach_by`),
   KEY `tbl_class_subject_FK_1` (`subject_id`),
   KEY `tbl_class_subject_FK` (`class_id`),
   KEY `tbl_class_subject_FK_2` (`teach_by`),

@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="h-100">
 <head>
 <title><?php echo $title; ?></title>
 
@@ -13,4 +13,4 @@
   
 <link href="<?php echo BASE_PATH; ?>/resources/css/dashboard.css" rel="stylesheet">
 </head>
-<body>
+<body class="d-flex flex-column h-100">

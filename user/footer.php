@@ -10,7 +10,7 @@
 
       $(document).on("click", "#addclassModalBtn", function() {
 
-        $('.modal-body').load('modal-content.php', function() {
+        $('.modal-body').load('modal-content.php?teacher=' + $("#teacher-id").text(), function() {
           $('#addclassModal').modal({
             show: true
           });
@@ -19,7 +19,7 @@
           e.preventDefault();
 
           submitForm($("#teacher-id").text());
-      
+
           return false;
         });
 
@@ -42,7 +42,13 @@
 
       });
     </script>
-    <p class="mt-5 mb-3 text-muted text-center">&copy; 2023 Student Term Test Marks System</p>
+
+    <footer class="footer mt-auto py-3">
+      <div class="container">
+        <p class="mt-5 mb-3 text-muted text-center">&copy; 2023 Student Term Test Marks System</p>
+      </div>
+    </footer>
+
     </body>
 
     </html>
