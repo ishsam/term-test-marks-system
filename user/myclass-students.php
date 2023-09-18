@@ -41,7 +41,9 @@ $selected_class = $class_teacher_tbl_row['class_id'];
                 while ($class_students_result = mysqli_fetch_array($all_class_students_query)) {
                     echo '<tr><th scope="row">' . $class_students_result['registration_number'] . '</th>
         <td>' . $class_students_result['first_name'] . ' ' . $class_students_result['last_name'] . '</td>
-        <td><button type="button" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-pencil"></span>Update Info</button></td>
+        <td>
+        <a href="update-student.php?id='.$class_students_result['id'].'" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-pencil" ></span>Update Strudent info</a>
+        </td>
         <td><button class="btn"><i class="fa fa-trash"></i></button></td>
         </tr>';
                 }

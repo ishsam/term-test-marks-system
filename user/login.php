@@ -21,12 +21,21 @@ if(isset($_SESSION['user_login'])){
 
 		if(count($input_arr)==0){
 			$query = "SELECT * FROM `tbl_teacher` WHERE `username` = '$username';";
+
+			
 			$result = mysqli_query($db_con, $query);
+
+			
+
 			//error_log(mysqli_num_rows($result));
 			if (mysqli_num_rows($result)==1) {
 				$row = mysqli_fetch_assoc($result);
 				if ($row['password']==sha1(md5($password))) {
 					$_SESSION['user_login']=$username;
+					$query2 = "SELECT `class_id` FROM `tbl_class_teacher` WHERE `teacher_id` = '". $row['teacher_id']. "'" . " AND `is_class_teacher` = 1";
+					$result2 = mysqli_query($db_con, $query2);
+					$class_teacher_tbl_row = mysqli_fetch_assoc($result2);
+					$_SESSION['class'] = $class_teacher_tbl_row['class_id'];
 					header('Location: home.php');
 					
 				}else{
