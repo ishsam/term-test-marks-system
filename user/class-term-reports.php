@@ -2,42 +2,40 @@
 session_start();
 $title = "Student Term Marks System";
 
-$term = 1;
+$term = filter_input(INPUT_POST, 'term', FILTER_SANITIZE_STRING);
+
+//$term = 1;
 $user = $_SESSION['user_login'];
-$class = $_SESSION['class'] ;
+$class = $_SESSION['class'];
+
+var_dump($term);
 
 
-//get class students from tbl_student
-//get marks for student_id => total
+if ($term) {
 
-$student_id_select_query = mysqli_query($db_con, "SELECT  CONCAT(`first_name`, ' ', `last_name`) AS `name` FROM `tbl_student` WHERE `class_id`= '$class';");
+  $avg_resultSet = array();
+  $rank_resultSet = array();
+  $stud_name_resultSet = array();
 
-$resultSet = array();
-$resultSet2 = array();
-$resultSet3 = array();
-$resultSet4 = array();
-
-$arr = array();
-$arr2 = array();
-$arr3 = array();
+  $arr = array();
+  $arr2 = array();
+  $arr3 = array();
 
 
-while ($student_tbl_row = mysqli_fetch_assoc($student_id_select_query)) {
-  $resultSet[] = $student_tbl_row['name'];
-}
+  $student_rank_query = mysqli_query($db_con, "SELECT CONCAT(`tbl_student`.`first_name`, ' ', `tbl_student`.`last_name`) AS `name`, AVG(`tbl_marks`.`marks`) as `average`, `tbl_marks`.`student_id`, rank() OVER ( ORDER by AVG(`tbl_marks`.`marks`) DESC) AS `rank` FROM `tbl_marks` INNER JOIN `tbl_student` WHERE `tbl_marks`.`term` = '$term' AND `tbl_marks`.`student_id` = `tbl_student`.`id` GROUP BY `tbl_marks`.`student_id` ORDER BY AVG(`tbl_marks`.`marks`) DESC;");
 
-$student_rank_query = mysqli_query($db_con, "SELECT AVG(`marks`) as `average`, `student_id`, rank() OVER ( ORDER by AVG(`marks`) DESC) AS `rank` FROM `tbl_marks` WHERE `term` = '$term' GROUP BY `student_id` ORDER BY AVG(`marks`) DESC;");
+  while ($student_rank_tbl_row = mysqli_fetch_assoc($student_rank_query)) {
+    $avg_resultSet[] = round($student_rank_tbl_row['average'], 2);
+    $rank_resultSet[] = $student_rank_tbl_row['rank'];
+    $stud_name_resultSet[] = $student_rank_tbl_row['name'];
+  }
 
-while ($student_rank_tbl_row = mysqli_fetch_assoc($student_rank_query)) {
-  $resultSet2[] = $student_rank_tbl_row['average'];
-  $resultSet3[] = $student_rank_tbl_row['rank'];
-  $resultSet4[] = $student_rank_tbl_row['student_id'];
-}
-
-for ($i=0; $i < sizeof($resultSet); $i++) { 
-  $arr[$resultSet[$i]] = $resultSet2[$i];
-  $arr2[$resultSet[$i]] = $resultSet3[$i];
-  $arr3[$resultSet[$i]] = $resultSet4[$i];
+  if (sizeof($avg_resultSet) > 0)
+    for ($i = 0; $i < sizeof($stud_name_resultSet); $i++) {
+      $arr[$stud_name_resultSet[$i]] = $avg_resultSet[$i];
+      $arr2[$stud_name_resultSet[$i]] = $rank_resultSet[$i];
+      $arr3[$stud_name_resultSet[$i]] = $stud_name_resultSet[$i];
+    }
 }
 
 ?>
@@ -45,55 +43,61 @@ for ($i=0; $i < sizeof($resultSet); $i++) {
 <?php include 'header.php';
 $title = "Student Term Marks System"; ?>
 
-  <body>
-      <?php include 'navbar.php';?>
+<body>
+  <?php include 'navbar.php'; ?>
 
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <h2>Class <?php echo $class ?> Results</h2>
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h2>Class <?php echo $class ?> Results</h2>
 
 
-      <div class="mb-3 row">
-        <div class="col-sm-3">
+    <div class="mb-3 row">
+      <div class="col-sm-3">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
           <select class="form-select" id="term" name="term">
-          <option selected>Select Term</option>
-          <option value="1">Term 1</option> 
-          <option value="2">Term 2</option> 
-          <option value="3">Term 3</option> 
+            <option selected value="1">Term 1</option>
+            <option value="2">Term 2</option>
+            <option value="3">Term 3</option>
           </select>
-        </div>
       </div>
+      <div class="col-sm-3">
+        <button type="submit" class="btn btn-outline-secondary btn-sm">Select Term</button>
+      </div>
+      </form>
 
-        <table class="table">
-            <thead>
-                <tr>
-                <th scope="col">#Rank</th>
-                <th scope="col">Student name</th>
-                <th scope="col">Average</th>
-                <th scope="col"></th>
-                </tr>
-            </thead>
-        
+    </div>
 
-            <tbody>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#Rank</th>
+          <th scope="col">Student name</th>
+          <th scope="col">Average</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
 
-            <?php
-            foreach ( $arr2 as $name => $rank) {
-                    echo '<tr>
-                    <th scope="row">'.$rank.'</th>
+
+      <tbody>
+
+        <?php
+        if ($term)
+          foreach ($arr2 as $name => $rank) {
+            echo '<tr>
+                    <th scope="row">' . $rank . '</th>
                         <td>' . $name . '</td>
-                        <td>'.$arr[$name].'</td>
+                        <td>' . $arr[$name] . '</td>
                         <td>
-                        <a href="print-term-report.php?id='.$arr3[$name].'&term='.$term.'" class="btn btn-light" name="print-report">Print Report</a>
+                        <a href="print-term-report.php?id=' . $arr3[$name] . '&term=' . $term . '" class="btn btn-light" name="print-report">Print Report</a>
                         </td>
                         </tr>';
-                }
-                ?>
-            </tbody>
-        </table>
-      </main>
+          }
+        ?>
+      </tbody>
+    </table>
+  </main>
 
-    
-      </div>
-      </div>
 
-      <?php include 'footer.php';?>
+  </div>
+  </div>
+
+  <?php include 'footer.php'; ?>

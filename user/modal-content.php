@@ -35,7 +35,7 @@ echo "<div class='form-floating mb-3'>
         $class_teacher_tbl_row = mysqli_fetch_assoc($class_teacher_query);
 
         while ($class_result = mysqli_fetch_array($class_query)) {
-            if($class_teacher_tbl_row['class_id'] != $class_result['class_id'])
+            //if($class_teacher_tbl_row['class_id'] != $class_result['class_id'])
                 echo '<option value=' . $class_result['class_id'] . '>' . $class_result['class_id'] . '</option>';
         }
         

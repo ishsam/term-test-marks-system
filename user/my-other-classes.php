@@ -28,12 +28,12 @@ $teacher_id = $teacher_tbl_row['teacher_id'];
             </thead>
             <tbody>
                 <?php
-                    $teacher_class_subjects_query = mysqli_query($db_con, "SELECT `tbl_class_subject`.`class_id`, `tbl_subject`.`name` FROM `tbl_class_subject` INNER JOIN `tbl_subject` ON  `tbl_subject`.`id` = `tbl_class_subject`.`subject_id` WHERE `tbl_class_subject`.`teach_by`= '$teacher_id ';");
+                $teacher_class_subjects_query = mysqli_query($db_con, "SELECT `tbl_class_subject`.`class_id`, `tbl_subject`.`name` FROM `tbl_class_subject` INNER JOIN `tbl_subject` ON  `tbl_subject`.`id` = `tbl_class_subject`.`subject_id` WHERE `tbl_class_subject`.`teach_by`= '$teacher_id ';");
 
                 while ($class_subjects_result = mysqli_fetch_array($teacher_class_subjects_query)) {
                     echo '<tr><th scope="row">' . $class_subjects_result['class_id'] . '</th>
         <td>' . $class_subjects_result['name'] . '</td>
-        <td><a href="add-marks.php?class='.$class_subjects_result['class_id'] .'&subject='.$class_subjects_result['name'].'" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-plus" ></span>Add Marks</a></td>
+        <td><a href="add-marks.php?class=' . $class_subjects_result['class_id'] . '&subject=' . $class_subjects_result['name'] . '" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-plus" ></span>Add Marks</a></td>
         <td><button class="btn" name="deleteClass" id="deleteClass"><i class="fa fa-trash"></i></button></td>
         </tr>';
                 }
