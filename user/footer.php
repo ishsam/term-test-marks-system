@@ -32,6 +32,7 @@
             success: function(response) {
               //$("#test").html(response)
               $("#addclassModal").modal('hide');
+              location.reload(); 
             },
             error: function() {
               alert("Error");

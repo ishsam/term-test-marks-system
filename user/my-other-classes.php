@@ -34,7 +34,9 @@ $teacher_id = $teacher_tbl_row['teacher_id'];
                     echo '<tr><th scope="row">' . $class_subjects_result['class_id'] . '</th>
         <td>' . $class_subjects_result['name'] . '</td>
         <td><a href="add-marks.php?class=' . $class_subjects_result['class_id'] . '&subject=' . $class_subjects_result['name'] . '" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-plus" ></span>Add Marks</a></td>
-        <td><button class="btn" name="deleteClass" id="deleteClass"><i class="fa fa-trash"></i></button></td>
+        <td>
+        <a href="delete-class.php?class=' . $class_subjects_result['class_id'] . '&subject=' . $class_subjects_result['name'] . '" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-trash" ></span>Delete Subject</a>
+        </td>
         </tr>';
                 }
 

@@ -25,7 +25,7 @@
     $subject_ids = $_POST['student-subjects'];
 
     // Add or replace class student data
-    $teacher_class_update_query = mysqli_query($db_con, "REPLACE INTO `tbl_student` (`first_name`, `last_name`, `registration_number`, `class_id`) VALUES ('$first_name', '$last_name', '$reg_no', '$selected_class')");
+    $teacher_class_update_query = mysqli_query($db_con, "REPLACE INTO `tbl_student` (`id`, `first_name`, `last_name`, `registration_number`, `class_id`) VALUES ('$student_id', '$first_name', '$last_name', '$reg_no', '$selected_class')");
 
     if($teacher_class_update_query){
       $success = true;

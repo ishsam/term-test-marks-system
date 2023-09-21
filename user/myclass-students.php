@@ -34,9 +34,10 @@ $selected_class = $_SESSION['class'];
                     echo '<tr><th scope="row">' . $class_students_result['registration_number'] . '</th>
         <td>' . $class_students_result['first_name'] . ' ' . $class_students_result['last_name'] . '</td>
         <td>
-        <a href="update-student.php?id='.$class_students_result['id'].'" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-pencil" ></span>Update Strudent info</a>
+        <a href="update-student.php?id='.$class_students_result['id'].'" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-pencil" ></span>Update Student info</a>
         </td>
-        <td><button class="btn"><i class="fa fa-trash"></i></button></td>
+        <td><a href="delete-student.php?id='.$class_students_result['id'].'" class="btn btn-light"><span style="margin-right: 5px;" class="fa fa-trash" ></span>Delete Student</a>
+        </td>
         </tr>';
                 }
                 ?>
