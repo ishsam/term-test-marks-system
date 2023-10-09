@@ -9,10 +9,9 @@ $teacher_id_select_query = mysqli_query($db_con, "SELECT `teacher_id` FROM `tbl_
 $teacher_tbl_row = mysqli_fetch_assoc($teacher_id_select_query);
 $teacher_id = $teacher_tbl_row['teacher_id'];
 
-$class_teacher_query = mysqli_query($db_con, "SELECT * FROM `tbl_class_teacher` WHERE `teacher_id` = '$teacher_id';");
-$class_teacher_tbl_row = mysqli_fetch_assoc($class_teacher_query);
+$selected_class = $_SESSION['class'];
 
-$selected_class = $class_teacher_tbl_row['class_id'];
+
 
 $success = false;
 $reg_no = 0;

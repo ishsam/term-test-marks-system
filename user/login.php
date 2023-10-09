@@ -32,10 +32,16 @@ if(isset($_SESSION['user_login'])){
 				$row = mysqli_fetch_assoc($result);
 				if ($row['password']==sha1(md5($password))) {
 					$_SESSION['user_login']=$username;
-					$query2 = "SELECT `class_id` FROM `tbl_class_teacher` WHERE `teacher_id` = '". $row['teacher_id']. "'" . " AND `is_class_teacher` = 1";
+					$query2 = "SELECT `class_id`, `is_class_teacher` FROM `tbl_class_teacher` WHERE `teacher_id` = '". $row['teacher_id']. "'";
 					$result2 = mysqli_query($db_con, $query2);
 					$class_teacher_tbl_row = mysqli_fetch_assoc($result2);
 					$_SESSION['class'] = $class_teacher_tbl_row['class_id'];
+
+					$query3 = "SELECT `user_role` FROM `tbl_teacher` WHERE `teacher_id` = '". $row['teacher_id']. "'";
+					$result3 = mysqli_query($db_con, $query3);
+					$teacher_tbl_row = mysqli_fetch_assoc($result3);
+					$_SESSION['is_class_teacher'] = $teacher_tbl_row['user_role'] == 1;
+
 					header('Location: home.php');
 					
 				}else{

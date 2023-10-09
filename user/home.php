@@ -1,4 +1,7 @@
-<?php include 'header.php';$title="Student Term Marks System";?>
+<?php include 'header.php';
+session_start();
+
+$title="Student Term Marks System";?>
   <body>
       <?php include 'navbar.php';?>
 
