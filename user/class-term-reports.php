@@ -8,7 +8,6 @@ $term = filter_input(INPUT_POST, 'term', FILTER_SANITIZE_STRING);
 $user = $_SESSION['user_login'];
 $class = $_SESSION['class'];
 
-var_dump($term);
 
 
 if ($term) {
@@ -16,18 +15,21 @@ if ($term) {
   $avg_resultSet = array();
   $rank_resultSet = array();
   $stud_name_resultSet = array();
+  $stud_id_resultSet = array();
 
   $arr = array();
   $arr2 = array();
   $arr3 = array();
+  $arr4 = array();
 
 
-  $student_rank_query = mysqli_query($db_con, "SELECT CONCAT(`tbl_student`.`first_name`, ' ', `tbl_student`.`last_name`) AS `name`, AVG(`tbl_marks`.`marks`) as `average`, `tbl_marks`.`student_id`, rank() OVER ( ORDER by AVG(`tbl_marks`.`marks`) DESC) AS `rank` FROM `tbl_marks` INNER JOIN `tbl_student` WHERE `tbl_marks`.`term` = '$term' AND `tbl_marks`.`student_id` = `tbl_student`.`id` GROUP BY `tbl_marks`.`student_id` ORDER BY AVG(`tbl_marks`.`marks`) DESC;");
+  $student_rank_query = mysqli_query($db_con, "SELECT `tbl_student`.`id` AS `id`, CONCAT(`tbl_student`.`first_name`, ' ', `tbl_student`.`last_name`) AS `name`, AVG(`tbl_marks`.`marks`) as `average`, `tbl_marks`.`student_id`, rank() OVER ( ORDER by AVG(`tbl_marks`.`marks`) DESC) AS `rank` FROM `tbl_marks` INNER JOIN `tbl_student` WHERE `tbl_marks`.`term` = '$term' AND `tbl_marks`.`student_id` = `tbl_student`.`id` GROUP BY `tbl_marks`.`student_id` ORDER BY AVG(`tbl_marks`.`marks`) DESC;");
 
   while ($student_rank_tbl_row = mysqli_fetch_assoc($student_rank_query)) {
     $avg_resultSet[] = round($student_rank_tbl_row['average'], 2);
     $rank_resultSet[] = $student_rank_tbl_row['rank'];
     $stud_name_resultSet[] = $student_rank_tbl_row['name'];
+    $stud_id_resultSet[] = $student_rank_tbl_row['id'];
   }
 
   if (sizeof($avg_resultSet) > 0)
@@ -35,6 +37,7 @@ if ($term) {
       $arr[$stud_name_resultSet[$i]] = $avg_resultSet[$i];
       $arr2[$stud_name_resultSet[$i]] = $rank_resultSet[$i];
       $arr3[$stud_name_resultSet[$i]] = $stud_name_resultSet[$i];
+      $arr4[$stud_name_resultSet[$i]] = $stud_id_resultSet[$i];
     }
 }
 
@@ -87,7 +90,7 @@ $title = "Student Term Marks System"; ?>
                         <td>' . $name . '</td>
                         <td>' . $arr[$name] . '</td>
                         <td>
-                        <a href="print-term-report.php?id=' . $arr3[$name] . '&term=' . $term . '" class="btn btn-light" name="print-report">Print Report</a>
+                        <a href="print-term-report.php?id=' . $arr4[$name] . '&term=' . $term . '" class="btn btn-light" name="print-report">Print Report</a>
                         </td>
                         </tr>';
           }

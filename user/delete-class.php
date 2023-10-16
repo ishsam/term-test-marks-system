@@ -20,6 +20,5 @@ $result = mysqli_query($db_con, "DELETE FROM `tbl_teacher_subject` WHERE `subjec
 $result2 = mysqli_query($db_con, "DELETE FROM `tbl_class_subject` WHERE `subject_id` = '$subject_id' AND `teach_by` = '$teacher_id';");
 
 
-var_dump($result);
 header("Location:my-other-classes.php");
 ?>
