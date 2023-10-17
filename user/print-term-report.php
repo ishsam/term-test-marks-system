@@ -18,7 +18,7 @@ $title = "Student Term Marks System"; ?>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <h2><?php echo $student_tbl_row['name'] ?> Term <?php echo $term ?> Results</h2>
-
+        <form class="form" id="term-report-form">    
         <table class="table">
             <thead>
                 <tr>
@@ -68,6 +68,9 @@ $title = "Student Term Marks System"; ?>
 
             </tbody>
         </table>
+        </form>
+        <input type="button" class="btn btn-outline-secondary btn-sm" id="create_pdf" name="print-report" value="Print Report"/>
+
     </main>
 
 

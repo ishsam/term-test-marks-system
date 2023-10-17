@@ -10,8 +10,6 @@
 		$repassword = $_POST['repassword'];
 		$role = $_POST['role'];
 
-		error_log($role." - ".$firstname." - ".$lastname." - ".$regno." - ".$password." - ".$repassword);
-
 		$input_error = array();
 		if (empty($firstname)) {
 			$input_error['firstname'] = "The First Name is Required";

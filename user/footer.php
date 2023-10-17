@@ -2,10 +2,47 @@
     <script src="../resources/js/bootstrap.bundle.js"></script>
     <!--<script src="../resources/js/bootstrap-select.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+
     <script type="text/javascript">
       $(document).ready(function() {
         $(".toast").toast('show');
         $('.selectpicker').selectpicker();
+
+        var form = $('.form'),
+          cache_width = form.width(),
+          a4 = [595.28, 841.89]; // for a4 size paper width and height  
+
+        $('#create_pdf').on('click', function() {
+          $('body').scrollTop(0);
+        
+          createPDF($('h2').text());
+        });
+
+        function createPDF(title) {
+          getCanvas().then(function(canvas) {
+            var
+              img = canvas.toDataURL("image/png"),
+              doc = new jsPDF({
+                unit: 'px',
+                format: 'a4'
+              });
+            doc.text(title, 10, 10);
+            doc.addImage(img, 'JPEG', 20, 20);
+            title = title.replace(/\s+/g, '-').toLowerCase();
+            doc.save(title + '.pdf');
+            form.width(cache_width);
+          });
+        }
+
+        function getCanvas() {
+          form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+          return html2canvas(form, {
+            imageTimeout: 2000,
+            removeContainer: true
+          });
+        }
+
       });
 
       $(document).on("click", "#addclassModalBtn", function() {
@@ -32,7 +69,7 @@
             success: function(response) {
               //$("#test").html(response)
               $("#addclassModal").modal('hide');
-              location.reload(); 
+              location.reload();
             },
             error: function() {
               alert("Error");

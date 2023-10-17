@@ -41,6 +41,7 @@ if(isset($_SESSION['user_login'])){
 					$result3 = mysqli_query($db_con, $query3);
 					$teacher_tbl_row = mysqli_fetch_assoc($result3);
 					$_SESSION['is_class_teacher'] = $teacher_tbl_row['user_role'] == 1;
+					$_SESSION['is_admin'] = $teacher_tbl_row['user_role'] == 3;
 
 					header('Location: home.php');
 					
