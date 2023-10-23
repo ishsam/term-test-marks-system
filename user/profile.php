@@ -58,118 +58,94 @@ if (isset($_POST['update-profile'])) {
 <body>
   <?php include 'navbar.php'; ?>
 
-  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>Profile</h2>
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-top: 2%;">
 
-    <form method="POST" action="">
-      <div class="mb-3 row">
-        <label for="teacher-own-class" class="col-sm-2 col-form-label">My Class</label>
-        <select class="selectpicker" id="teacher-own-class" name="teacher-own-class">
-          <?php
-          $class_query = mysqli_query($db_con, 'SELECT * FROM `tbl_class`;');
-          $class_teacher_query = mysqli_query($db_con, "SELECT * FROM `tbl_class_teacher` WHERE `teacher_id` = '$teacher_id';");
-          $class_teacher_tbl_row = mysqli_fetch_assoc($class_teacher_query);
+    <div class="card text-white bg-secondary mb-3 " style="opacity: 0.8;">
+      <div class="card-header" style="background-color: #563d7c; font-size: large;">
+        <h5 class="card-title">Update My Profile</h5>
+      </div>
+      <div class="card-body" style="font-size: large;">
+        <form method="POST" action="">
+          <div class="mb-3 row">
+            <label for="teacher-own-class" class="col-sm-2 col-form-label">My Class</label>
+            <select class="selectpicker" id="teacher-own-class" name="teacher-own-class">
+              <?php
+              $class_query = mysqli_query($db_con, 'SELECT * FROM `tbl_class`;');
+              $class_teacher_query = mysqli_query($db_con, "SELECT * FROM `tbl_class_teacher` WHERE `teacher_id` = '$teacher_id';");
+              $class_teacher_tbl_row = mysqli_fetch_assoc($class_teacher_query);
 
-          $query3 = "SELECT `user_role` FROM `tbl_teacher` WHERE `teacher_id` = '$teacher_id'";
-					$result3 = mysqli_query($db_con, $query3);
-					$teacher_tbl_row = mysqli_fetch_assoc($result3);
-					$is_class_teacher = $teacher_tbl_row['user_role'] == 1;
+              $query3 = "SELECT `user_role`, `registration_number` FROM `tbl_teacher` WHERE `teacher_id` = '$teacher_id'";
+              $result3 = mysqli_query($db_con, $query3);
+              $teacher_tbl_row = mysqli_fetch_assoc($result3);
+              $is_class_teacher = $teacher_tbl_row['user_role'] == 1;
 
-          $selected_class = $class_teacher_tbl_row['class_id'];
-          //$is_class_teacher = $class_teacher_tbl_row['is_class_teacher'];
+              $selected_class = $class_teacher_tbl_row['class_id'];
+              $teacher_reg_no = $teacher_tbl_row['registration_number'];
+              //$is_class_teacher = $class_teacher_tbl_row['is_class_teacher'];
 
-          if ($is_class_teacher)
+              if ($is_class_teacher)
 
-            while ($class_result = mysqli_fetch_array($class_query)) {
-              if ($selected_class == $class_result['class_id']) {
-                echo '<option value=' . $class_result['class_id'] . ' selected>' . $class_result['class_id'] . '</option>';
-              } else {
-                echo '<option value=' . $class_result['class_id'] . '>' . $class_result['class_id'] . '</option>';
+                while ($class_result = mysqli_fetch_array($class_query)) {
+                  if ($selected_class == $class_result['class_id']) {
+                    echo '<option value=' . $class_result['class_id'] . ' selected>' . $class_result['class_id'] . '</option>';
+                  } else {
+                    echo '<option value=' . $class_result['class_id'] . '>' . $class_result['class_id'] . '</option>';
+                  }
+                }
+              ?>
+            </select>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="teacher-subjects" class="col-sm-2 col-form-label">Subjects</label>
+            <select class="selectpicker" multiple id="teacher-subjects" data-live-search="true" name="teacher-subjects[]">
+              <?php
+              $subject_query = mysqli_query($db_con, 'SELECT * FROM `tbl_subject`;');
+              $subject_teacher_query = mysqli_query($db_con, "SELECT * FROM `tbl_teacher_subject` WHERE `teacher_id` = '$teacher_id';");
+
+
+              $selected_subjects = array();
+              while ($subject_teacher_result = mysqli_fetch_array($subject_teacher_query)) {
+                array_push($selected_subjects, $subject_teacher_result['subject_id']);
               }
-            }
-          ?>
-        </select>
-      </div>
 
-      <div class="mb-3 row">
-        <label for="teacher-subjects" class="col-sm-2 col-form-label">Subjects</label>
-        <select class="selectpicker" multiple id="teacher-subjects" data-live-search="true" name="teacher-subjects[]">
-          <?php
-          $subject_query = mysqli_query($db_con, 'SELECT * FROM `tbl_subject`;');
-          $subject_teacher_query = mysqli_query($db_con, "SELECT * FROM `tbl_teacher_subject` WHERE `teacher_id` = '$teacher_id';");
+              $ignore = 0;
+              while ($subject_result = mysqli_fetch_array($subject_query)) {
 
+                foreach ($selected_subjects as $selected_subject) {
+                  if ($selected_subject == $subject_result['id']) {
+                    echo '<option value=' . $subject_result['id']  . ' selected>' . $subject_result['name'] . '</option>';
+                    $ignore = $subject_result['id'];
+                  }
+                }
 
-          $selected_subjects = array();
-          while ($subject_teacher_result = mysqli_fetch_array($subject_teacher_query)) {
-            array_push($selected_subjects, $subject_teacher_result['subject_id']);
-          }
-
-          $ignore = 0;
-          while ($subject_result = mysqli_fetch_array($subject_query)) {
-
-            foreach ($selected_subjects as $selected_subject) {
-              if ($selected_subject == $subject_result['id']) {
-                echo '<option value=' . $subject_result['id']  . ' selected>' . $subject_result['name'] . '</option>';
-                $ignore = $subject_result['id'];
+                if ($subject_result['id'] != $ignore)
+                  echo '<option value=' . $subject_result['id'] . ' . .>' . $subject_result['name'] . '</option>';
               }
-            }
 
-            if ($subject_result['id'] != $ignore)
-              echo '<option value=' . $subject_result['id'] . ' . .>' . $subject_result['name'] . '</option>';
-          }
+              ?>
+            </select>
+            <?php
+            //print_r($subject_teacher_result[1]);
+            //print_r( $other_classes);
+            ?>
+          </div>
 
-          ?>
-        </select>
-        <?php
-        //print_r($subject_teacher_result[1]);
-        //print_r( $other_classes);
-        ?>
+          <div class="mb-3 row">
+            <label for="reg-no" class="col-sm-2 col-form-label">Registration number</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" id="teacher-reg-no" name="teacher-reg-no" value="<?php echo $teacher_reg_no; ?>" placeholder="Registration No">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary" name="update-profile">Update My Profile</button>
+          </div>
+        </form>
       </div>
+    </div>
 
-      <!--<div class="mb-3 row">
-        <label for="teacher-other-classes" class="col-sm-2 col-form-label">My Other Classes</label>
-        <select class="selectpicker" multiple id="teacher-other-classes" data-live-search="true" name="teacher-other-classes[]">
-          <?php
-          /*$other_class_query = mysqli_query($db_con, 'SELECT * FROM `tbl_class`;');
-          $class_teacher_query = mysqli_query($db_con, "SELECT * FROM `tbl_class_teacher` WHERE `teacher_id` = '$teacher_id' AND `is_class_teacher` = 0;");
 
-          $selected_classes = array();
-          while ($class_teacher_result = mysqli_fetch_array($class_teacher_query)) {
-            array_push($selected_classes, $class_teacher_result['class_id']);
-          }
-
-          $ignore = 0;
-          while ($other_class_result = mysqli_fetch_array($other_class_query)) {
-
-            foreach ($selected_classes as $selected_class) {
-              if ($selected_class == $other_class_result['class_id']) {
-                echo '<option value=' . $other_class_result['class_id']  . ' selected>' . $other_class_result['class_id'] . '</option>';
-                $ignore = $other_class_result['class_id'];
-              }
-            }
-
-            if ($other_class_result['class_id'] != $ignore)
-              echo '<option value=' . $other_class_result['class_id'] . ' . .>' . $other_class_result['class_id'] . '</option>';
-          }
-*/
-
-          //while ($other_class_result = mysqli_fetch_array($other_class_query)) {
-          //  echo '<option value=' . $other_class_result['class_id'] . '>' . $other_class_result['class_id'] . '</option>';
-          //}
-          ?>
-        </select>
-      </div>-->
-      <div class="mb-3 row">
-        <label for="reg-no" class="col-sm-2 col-form-label">Registration number</label>
-        <div class="col-sm-3">
-          <input type="text" class="form-control" id="teacher-reg-no" name="teacher-reg-no" value="<?php echo $teacher_reg_no; ?>" placeholder="Registration No">
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <button type="submit" class="btn btn-outline-secondary btn-sm" name="update-profile">Update My Profile</button>
-      </div>
-    </form>
   </main>
 
 

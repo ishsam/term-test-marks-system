@@ -13,4 +13,5 @@
   
 <link href="<?php echo BASE_PATH; ?>/resources/css/dashboard.css" rel="stylesheet">
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 " style="background-color:lightgray;">
+

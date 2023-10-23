@@ -13,10 +13,21 @@
           cache_width = form.width(),
           a4 = [595.28, 841.89]; // for a4 size paper width and height  
 
+
+
+        $('#create_class_report_pdf').on('click', function(e) {
+
+          e.preventDefault();
+
+          $('body').scrollTop(0);
+
+          createPDF($('h5').text());
+        });
+
         $('#create_pdf').on('click', function() {
           $('body').scrollTop(0);
-        
-          createPDF($('h2').text());
+
+          createPDF($('h5').text());
         });
 
         function createPDF(title) {
@@ -45,6 +56,75 @@
 
       });
 
+      $(document).on("click", "#deleteStudentModalBtn", function(event) {
+
+        $('#deletestudentModal').modal({
+          show: true
+        });
+
+
+        $("#deletestudentbtn").on('click', function(e) {
+
+          e.preventDefault();
+
+          submitForm(event.target.href.split("=")[1]);
+
+          return false;
+        });
+
+        function submitForm(studentId) {
+          $.ajax({
+            type: "POST",
+            url: "delete-student.php?id=" + studentId,
+            cache: false,
+            data: $('form#deleteStudentForm').serialize(),
+            success: function(response) {
+              $("#deletestudentModal").modal('hide');
+              location.reload();
+            },
+            error: function() {
+              alert("Error");
+            }
+          });
+        }
+
+      });
+
+      $(document).on("click", "#deleteclassModalBtn", function(event) {
+
+        $('#deleteclassModal').modal({
+          show: true
+        });
+
+
+        $("#deleteclassbtn").on('click', function(e) {
+
+          e.preventDefault();
+
+          submitForm(event.target.href.split("?")[1]);
+
+          return false;
+        });
+
+
+        function submitForm(query) {
+          $.ajax({
+            type: "POST",
+            url: "delete-class.php?" + query,
+            cache: false,
+            data: $('form#deleteClassForm').serialize(),
+            success: function(response) {
+              $("#deleteclassModal").modal('hide');
+              location.reload();
+            },
+            error: function() {
+              alert("Error");
+            }
+          });
+        }
+
+      });
+
       $(document).on("click", "#addclassModalBtn", function() {
 
         $('.modal-body').load('modal-content.php?teacher=' + $("#teacher-id").text(), function() {
@@ -52,6 +132,9 @@
             show: true
           });
         });
+
+
+
         $("#addclassbtn").on('click', function(e) {
           e.preventDefault();
 
@@ -59,6 +142,8 @@
 
           return false;
         });
+
+
 
         function submitForm(teacherId) {
           $.ajax({

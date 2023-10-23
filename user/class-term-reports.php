@@ -49,54 +49,71 @@ $title = "Student Term Marks System"; ?>
 <body>
   <?php include 'navbar.php'; ?>
 
-  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h2>Class <?php echo $class ?> Results</h2>
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-top: 2%;">
 
-
-    <div class="mb-3 row">
-      <div class="col-sm-3">
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-          <select class="form-select" id="term" name="term">
-            <option selected value="1">Term 1</option>
-            <option value="2">Term 2</option>
-            <option value="3">Term 3</option>
-          </select>
+    <div class="card text-white bg-secondary mb-3 " style="opacity: 0.8;">
+      <div class="card-header" style="background-color: #563d7c; font-size: large;">
+        <h5 class="card-title">Class <?php echo $class ?> Results</h5>
       </div>
-      <div class="col-sm-3">
-        <button type="submit" class="btn btn-outline-secondary btn-sm">Select Term</button>
-      </div>
-      </form>
+      <div class="card-body" style="font-size: large;">
 
-    </div>
+        <div class="mb-3 row">
+          <div class="col-sm-3">
+            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+              <select class="form-select" id="term" name="term">
+                <option selected value="1">Term 1</option>
+                <option value="2">Term 2</option>
+                <option value="3">Term 3</option>
+              </select>
+          </div>
+          <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary">Select Term</button>
+            <?php if($term) echo '<input type="button" class="btn btn-primary" id="create_class_report_pdf" name="print-class-report" value="Print Class Report" />';?>
+          </div>
+          </form>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#Rank</th>
-          <th scope="col">Student name</th>
-          <th scope="col">Average</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
+        </div>
+        <form class="form">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#Rank</th>
+              <th scope="col">Student name</th>
+              <th scope="col">Average</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
 
 
-      <tbody>
+          <tbody>
 
-        <?php
-        if ($term)
-          foreach ($arr2 as $name => $rank) {
-            echo '<tr>
+            <?php
+            if ($term){
+              foreach ($arr2 as $name => $rank) {
+                echo '<tr>
                     <th scope="row">' . $rank . '</th>
                         <td>' . $name . '</td>
                         <td>' . $arr[$name] . '</td>
                         <td>
                         <a href="print-term-report.php?id=' . $arr4[$name] . '&term=' . $term . '" class="btn btn-light" name="print-report">Print Report</a>
                         </td>
-                        </tr>';
-          }
-        ?>
-      </tbody>
-    </table>
+                        </tr>
+                        ';
+              }
+            }
+            ?>
+            
+          </tbody>
+        </table>
+        </form>
+      </div>
+
+    </div>
+
+
+
+
+
   </main>
 
 
