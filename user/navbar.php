@@ -5,7 +5,7 @@ $is_admin  = $_SESSION['is_admin'];
 
 ?>
 <header class="navbar sticky-top flex-md-nowrap p-0 shadow" style="background-color: #563d7c; font-weight: 500; font-size: large;">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#" style="color: #fff;font-size: large;">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="home.php" style="color: #fff;font-size: large;">
     Term Test Marks Analysis System</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

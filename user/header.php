@@ -1,3 +1,6 @@
+<?php 
+$title = "Student Term Marks System"; ?>
+
 <!doctype html>
 <html class="h-100">
 <head>
