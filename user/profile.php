@@ -10,6 +10,7 @@ $teacher_id_select_query = mysqli_query($db_con, "SELECT `teacher_id`, `registra
 $teacher_tbl_row = mysqli_fetch_assoc($teacher_id_select_query);
 $teacher_id = $teacher_tbl_row['teacher_id'];
 $teacher_reg_no = $teacher_tbl_row['registration_number'];
+$success = false;
 
 if (isset($_POST['update-profile'])) {
   $subject_ids = $_POST['teacher-subjects'];
@@ -41,7 +42,12 @@ if (isset($_POST['update-profile'])) {
   //Add/ Update subjects of the teacher
   mysqli_query($db_con, "DELETE FROM `tbl_teacher_subject` WHERE `teacher_id`= '$teacher_id';");
   foreach ($subject_ids as $subject_id) {
+    
     mysqli_query($db_con, "INSERT INTO `tbl_teacher_subject`(`teacher_id`, `subject_id`) VALUES ('$teacher_id', '$subject_id')");
+  }
+
+  if ($teacher_update_query) {
+    $success = true;
   }
 
   //Add/ Update other classes of the teacher
@@ -140,6 +146,14 @@ if (isset($_POST['update-profile'])) {
 
           <div class="mb-3">
             <button type="submit" class="btn btn-primary" name="update-profile">Update My Profile</button>
+          </div>
+
+          <div class="mb-3 row">
+            <div class="col-sm-3">
+              <?php
+              echo $success ? "<div class='alert alert-info ' role='alert'> Profile Updated ! </div>" : "<div></div>"
+              ?>
+            </div>
           </div>
         </form>
       </div>

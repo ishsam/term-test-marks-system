@@ -113,7 +113,7 @@ $title = "Student Term Marks System"; ?>
           <div class="mb-3 row">
             <div class="col-sm-3">
               <?php
-              echo $success ? "<div class='alert alert-info ' role='alert'> Student with registration no: $reg_no added ! </div>" : "<div></div>"
+              echo $success ? "<div class='alert alert-info ' role='alert'> Student with registration no: $reg_no updated ! </div>" : "<div></div>"
               ?>
             </div>
           </div>

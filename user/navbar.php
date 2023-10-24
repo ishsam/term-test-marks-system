@@ -6,12 +6,12 @@ $is_admin  = $_SESSION['is_admin'];
 ?>
 <header class="navbar sticky-top flex-md-nowrap p-0 shadow" style="background-color: #563d7c; font-weight: 500; font-size: large;">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#" style="color: #fff;font-size: large;">
-  Term Test Marks Analysis System</a>
+    Term Test Marks Analysis System</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="navbar-nav" >
+  <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="btn btn-primary btn-lg active" href="logout.php">Sign out</a>
     </div>
@@ -19,11 +19,11 @@ $is_admin  = $_SESSION['is_admin'];
 </header>
 
 
-<div class="container-fluid" >
-  <div class="row" >
+<div class="container-fluid">
+  <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse" style="background-color: #563d7c; font-size: large;">
-      <div class="position-sticky pt-3" >
-        <ul class="nav flex-column" >
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
           <?php if (!$is_admin) {
             echo '
           <li class="nav-item">
@@ -46,6 +46,17 @@ $is_admin  = $_SESSION['is_admin'];
           </li>';
           }
           ?>
+          <?php if ($is_class_teacher && !$is_admin) {
+            echo '<li class="nav-item">
+            <a class="nav-link" href="addstudents.php" style="color: white;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="feather bi bi-person-plus" viewBox="0 0 16 16">
+                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+              </svg>
+              Add Students
+            </a>
+          </li>';
+          } ?>
           <?php if ($is_class_teacher  && !$is_admin) {
             echo '
                 <li class="nav-item">
@@ -70,16 +81,6 @@ $is_admin  = $_SESSION['is_admin'];
           ?>
           <?php if ($is_class_teacher && !$is_admin) {
             echo '<li class="nav-item">
-            <a class="nav-link" href="addstudents.php" style="color: white;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="feather bi bi-person-plus" viewBox="0 0 16 16">
-                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-              </svg>
-              Add Students
-            </a>
-          </li>
-
-          <li class="nav-item">
             <a class="nav-link" href="class-term-reports.php" style="color: white;">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers" aria-hidden="true">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>

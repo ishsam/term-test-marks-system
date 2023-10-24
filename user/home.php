@@ -1,5 +1,11 @@
-<?php include 'header.php';
+<?php require_once 'db_con.php';
+
+include 'header.php';
+
 session_start();
+
+
+$selected_class = $_SESSION['class'];
 
 $title = "Student Term Marks System"; ?>
 
@@ -18,6 +24,73 @@ $title = "Student Term Marks System"; ?>
 
         </div>
       </div>
+
+    </div>
+    <div class="mb-3 row">
+      <div class="col">
+
+        <div class="card text-white bg-secondary mb-3 ">
+          <div class="card-header" style="background-color: #563d7c; font-size: large;">
+            <h5 class="card-title">Total Students</h5>
+          </div>
+          <div class="card-body" style="font-size: large;">
+            <div class="inner">
+              <?php
+              $query = "SELECT * FROM `tbl_student` WHERE `class_id` = '$selected_class';";
+
+              $result = mysqli_query($db_con, $query);
+
+              $totalcust = mysqli_num_rows($result);
+              ?>
+              <h3><?php echo $totalcust; ?></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+
+      <div class="card text-white bg-secondary mb-3 ">
+          <div class="card-header" style="background-color: #563d7c; font-size: large;">
+            <h5 class="card-title">Top Performer</h5>
+          </div>
+          <div class="card-body" style="font-size: large;">
+            <div class="inner">
+              <?php
+              $query = "SELECT * FROM `tbl_student` WHERE `class_id` = '$selected_class';";
+
+              $result = mysqli_query($db_con, $query);
+
+              $totalcust = mysqli_num_rows($result);
+              ?>
+              <h3><?php echo 'Samantha Samaradiwakara'; ?></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+
+      <div class="card text-white bg-secondary mb-3 ">
+          <div class="card-header" style="background-color: #563d7c; font-size: large;">
+            <h5 class="card-title">Top Performer Average</h5>
+          </div>
+          <div class="card-body" style="font-size: large;">
+            <div class="inner">
+              <?php
+              $query = "SELECT * FROM `tbl_student` WHERE `class_id` = '$selected_class';";
+
+              $result = mysqli_query($db_con, $query);
+
+              $totalcust = mysqli_num_rows($result);
+              ?>
+              <h3><?php echo '91.66'; ?></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="col"></div>
+
 
     </div>
   </main>
