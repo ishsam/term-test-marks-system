@@ -90,6 +90,40 @@
 
       });
 
+      $(document).on("click", "#deleteTeacherModalBtn", function(event) {
+
+        $('#deleteteacherModal').modal({
+          show: true
+        });
+
+
+        $("#deleteteacherbtn").on('click', function(e) {
+
+          e.preventDefault();
+
+          submitForm(event.target.href.split("=")[1]);
+
+          return false;
+        });
+
+        function submitForm(teacherId) {
+          $.ajax({
+            type: "POST",
+            url: "delete-teacher.php?id=" + teacherId,
+            cache: false,
+            data: $('form#deleteTeacherForm').serialize(),
+            success: function(response) {
+              $("#deleteteacherModal").modal('hide');
+              location.reload();
+            },
+            error: function() {
+              alert("Error");
+            }
+          });
+        }
+
+      });
+
       $(document).on("click", "#deleteclassModalBtn", function(event) {
 
         $('#deleteclassModal').modal({

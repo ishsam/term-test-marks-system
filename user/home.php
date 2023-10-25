@@ -146,7 +146,7 @@ $title = "Student Term Marks System"; ?>
       </div>
     </div>
     <div class="col"></div>
-  <?php }  else { ?>
+  <?php }  if (!$is_class_teacher && !$is_admin ) { ?>
 
   <div class="col">
 
