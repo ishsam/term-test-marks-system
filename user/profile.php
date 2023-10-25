@@ -36,14 +36,15 @@ if (isset($_POST['update-profile'])) {
       $teacher_class_update_query = mysqli_query($db_con, $update_sql);
 
     $_SESSION['class'] = $class_name;
-  }
+
+    //Add/ Update subjects of the teacher
+    mysqli_query($db_con, "DELETE FROM `tbl_teacher_subject` WHERE `teacher_id`= '$teacher_id';");
+    foreach ($subject_ids as $subject_id) {
 
 
-  //Add/ Update subjects of the teacher
-  mysqli_query($db_con, "DELETE FROM `tbl_teacher_subject` WHERE `teacher_id`= '$teacher_id';");
-  foreach ($subject_ids as $subject_id) {
-    
-    mysqli_query($db_con, "INSERT INTO `tbl_teacher_subject`(`teacher_id`, `subject_id`) VALUES ('$teacher_id', '$subject_id')");
+      mysqli_query($db_con, "INSERT INTO `tbl_teacher_subject`(`teacher_id`, `subject_id`) VALUES ('$teacher_id', '$subject_id')");
+      mysqli_query($db_con, "INSERT INTO `tbl_class_subject`(`class_id`, `subject_id`,`teach_by`) VALUES ('$class_name', '$subject_id', '$teacher_id')");
+    }
   }
 
   if ($teacher_update_query) {

@@ -4,6 +4,7 @@ $title = "Student Term Marks System";
 
 $student_id = $_GET['id'];
 $term = $_GET['term'];
+$rank = $_GET['rank'];
 
 $student_select_query = mysqli_query($db_con, "SELECT CONCAT(`first_name`, ' ', `last_name`) AS `name` FROM `tbl_student` WHERE `id`= '$student_id';");
 $student_tbl_row = mysqli_fetch_assoc($student_select_query);
@@ -21,7 +22,7 @@ $title = "Student Term Marks System"; ?>
 
         <div class="card text-white bg-secondary mb-3 " style="opacity: 0.8;">
             <div class="card-header" style="background-color: #563d7c; font-size: large;">
-                <h5 class="card-title"><?php echo $student_tbl_row['name'] ?> Term <?php echo $term ?> Results</h5>
+                <h5 class="card-title"><?php echo $student_tbl_row['name'] ?> Term <?php echo $term ?> Results [ RANK : <?php echo $rank; ?> ] </h5>
             </div>
             <div class="card-body" style="font-size: large;">
                 <form class="form" id="term-report-form">

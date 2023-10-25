@@ -4,6 +4,9 @@ include 'header.php';
 
 session_start();
 
+$top_performer = "N/A";
+$top_performer_avg= "N/A";
+
 $is_class_teacher  = $_SESSION['is_class_teacher'];
 $is_admin  = $_SESSION['is_admin'];
 $user = $_SESSION['user_login'];
@@ -69,13 +72,13 @@ $title = "Student Term Marks System"; ?>
         <div class="card-body" style="font-size: large;">
           <div class="inner"> <?php
 
-                              $query = "SELECT * FROM `tbl_student` WHERE `class_id` = '$selected_class';";
+                            $student_rank_query = mysqli_query($db_con, "SELECT `tbl_student`.`id` AS `id`, CONCAT(`tbl_student`.`first_name`, ' ', `tbl_student`.`last_name`) AS `name` FROM `tbl_marks` INNER JOIN `tbl_student` WHERE `tbl_marks`.`term` = '1' AND `tbl_marks`.`student_id` = `tbl_student`.`id` GROUP BY `tbl_marks`.`student_id` ORDER BY AVG(`tbl_marks`.`marks`) DESC;");
+                            $student_rank_result = mysqli_fetch_array($student_rank_query);
 
-                              $result = mysqli_query($db_con, $query);
+                            $top_performer = $student_rank_result['name'];
 
-                              $totalcust = mysqli_num_rows($result);
                               ?>
-            <h3><?php echo 'Samantha Samaradiwakara'; ?></h3>
+            <h3><?php echo $top_performer; ?></h3>
           </div>
         </div>
       </div>
@@ -89,13 +92,14 @@ $title = "Student Term Marks System"; ?>
         <div class="card-body" style="font-size: large;">
           <div class="inner">
             <?php
-            $query = "SELECT * FROM `tbl_student` WHERE `class_id` = '$selected_class';";
+ 
 
-            $result = mysqli_query($db_con, $query);
+          $student_avg_query = mysqli_query($db_con, "SELECT  AVG(`tbl_marks`.`marks`) as `average`, `tbl_marks`.`student_id` FROM `tbl_marks` INNER JOIN `tbl_student` WHERE `tbl_marks`.`term` = '1' AND `tbl_marks`.`student_id` = `tbl_student`.`id` GROUP BY `tbl_marks`.`student_id` ORDER BY AVG(`tbl_marks`.`marks`) DESC;");
+          $student_avg_result = mysqli_fetch_array($student_avg_query);
 
-            $totalcust = mysqli_num_rows($result);
+          $top_performer_avg = $student_avg_result['average'];
             ?>
-            <h3><?php echo '91.66'; ?></h3>
+            <h3><?php echo $top_performer_avg; ?></h3>
           </div>
         </div>
       </div>
